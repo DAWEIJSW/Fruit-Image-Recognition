@@ -1,3 +1,9 @@
+"""
+	Code written by Tu Thanh Nguyen
+	Date : September 17, 2017 
+	Last Update: September 18, 2017
+"""
+
 from PIL import Image
 import os
 import os.path
