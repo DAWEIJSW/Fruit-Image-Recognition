@@ -14,7 +14,7 @@ class ScaleImage:
 	def __init__(self,path):
 		self.path=path
 	def readFile(self):
-		return [x for x in os.listdir(self.path) if re.match('.*\.[gif|png|jpeg|jpg]', x)]
+		return [x for x in os.listdir(self.path) if re.match('.*\.[gif|png|jpeg|jpg|png|JPG]', x)]
 	def readImage(self,im):
 		return Image.open(self.path+im).convert('RGB')
 	def resizeImage(self,img):
