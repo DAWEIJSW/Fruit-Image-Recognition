@@ -1,0 +1,38 @@
+I = imread('100.jpg');
+H = rgb2hsv(I);
+Hue=H;
+Hue(:,:,2:3) = 0;
+V=H;
+V(:,:,1:2) = 0;
+BW = H(:,:,2);
+wname = 'sym4';
+[CA,CH,CV,CD] = dwt2(BW,wname,'mode','per');
+indexes = kmeans(CA(:), 3);
+classImage = reshape(indexes, size(CA));
+filter = classImage<2;
+filter=mat2gray(filter);
+H=imresize(H,0.5);
+HSV=H;
+H=HSV(:,:,1);
+S=HSV(:,:,2);
+V=HSV(:,:,3);
+
+BW = edge(CA,'log');
+% imshow(BW);
+I_fill = imfill(BW, 'holes');
+STATS = regionprops(I_fill, 'BoundingBox');
+I=imresize(I,0.5);
+bound = STATS.BoundingBox;
+imshow(I_fill);
+x1=bound(1)-1;
+x2=bound(2)-1;
+x3=bound(3)+1;
+x4=bound(4)+1;
+I2 = imcrop(I,[x1 x2 x3 x4]);
+imshow(I2);
+H=immultiply(H,I_fill);
+S=immultiply(S,I_fill);
+V=immultiply(V,I_fill);
+HSV=cat(3,H,S,V);
+RGB=hsv2rgb(HSV);
+
